@@ -17,4 +17,4 @@ Add this repository secret before expecting the action to complete:
 OPENROUTER_API_KEY
 ```
 
-The workflow currently uses `anthropic/claude-sonnet-4` and can be edited in `.github/workflows/code-beat.yml`.
+The workflow uses Code Beat's default OpenRouter model unless `.github/workflows/code-beat.yml` overrides it.
