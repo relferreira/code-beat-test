@@ -17,3 +17,4 @@ jobs:
       - uses: relferreira/code-beat@main
         with:
           openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+          model: moonshotai/kimi-k2.6
