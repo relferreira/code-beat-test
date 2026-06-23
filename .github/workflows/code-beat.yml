@@ -17,3 +17,12 @@ jobs:
       - uses: relferreira/code-beat@main
         with:
           openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+          review-models: |
+            deepseek/deepseek-v4-flash
+            moonshotai/kimi-k2.6
+          code-quality-models: |
+            deepseek/deepseek-v4-flash
+            deepseek/deepseek-v4-flash
+          retry-max-attempts: 3
+          retry-delay-ms: 1000
+          retry-backoff-factor: 2
