@@ -5,7 +5,7 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
   issues: write
 
@@ -17,3 +17,5 @@ jobs:
       - uses: relferreira/code-beat@main
         with:
           openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+          report: true
+          viewer-url: https://code-beat.relferreira.workers.dev
