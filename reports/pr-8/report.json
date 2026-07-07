@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-07T21:00:39.807Z",
+  "tool": {
+    "name": "code-beat",
+    "version": "0.1.0"
+  },
+  "repo": {
+    "owner": "relferreira",
+    "name": "code-beat-test"
+  },
+  "pullRequest": {
+    "number": 8,
+    "title": "Test report viewer end-to-end",
+    "author": "relferreira",
+    "baseRef": "main",
+    "headRef": "test-report-viewer",
+    "baseSha": "1f115447222059fc64ecd9cab06faf8cd1304bcf",
+    "headSha": "03cfcebf4c6786cd86e55ef5f7d61b445e447f74"
+  },
+  "review": {
+    "score": 2,
+    "summary": "Code Beat found 1 actionable finding(s): 1 major. Score 2/5 reflects the highest-severity issue raised by the reviewer agents.",
+    "model": "deepseek/deepseek-v4-flash",
+    "truncatedDiff": false,
+    "skippedCommentCount": 0,
+    "findings": [
+      {
+        "path": "src/discount.ts",
+        "line": 1,
+        "severity": "major",
+        "title": "applyDiscount missing input validation for out-of-range percent values",
+        "body": "The `applyDiscount` function performs no bounds checking on the `percent` parameter. This produces semantically incorrect results for two classes of inputs:\n\n1. **Negative percent**: `applyDiscount(100, -10)` returns 110 — the price increases instead of being discounted.\n2. **Percent > 100**: `applyDiscount(100, 200)` returns -100 — a negative final price.\n\nThe existing `src/pricing.ts` (line 11–20) already demonstrates the correct pattern: it returns `subtotal` unchanged when `discountPercent <= 0` and returns `0` when `discountPercent >= 100`. The new function should adopt similar guards to avoid surprising behavior for callers who pass out-of-range values.",
+        "posted": true
+      }
+    ]
+  }
+}
