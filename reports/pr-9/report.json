@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-10T17:13:42.170Z",
+  "generatedAt": "2026-07-10T17:15:45.455Z",
   "tool": {
     "name": "code-beat",
     "version": "0.1.0"
@@ -16,24 +16,17 @@
     "baseRef": "main",
     "headRef": "test-pr-overview-report",
     "baseSha": "1f115447222059fc64ecd9cab06faf8cd1304bcf",
-    "headSha": "3f110109b25be1203276827b1f8b929c7e317a7f"
+    "headSha": "177e54f57c175bb91d4c43ef86b6b0a4b3f7bb56"
   },
   "overview": {
-    "headline": "Add loyalty points accrual and burn to checkout, with integer points from subtotal cents and burn applied after percent discount.",
-    "body": "## What this PR does\nIntroduces a loyalty points system for the checkout flow. A new `loyalty.ts` module provides `pointsForSubtotal` (accrues integer points from subtotal cents, 1 point per whole dollar) and `centsFromPoints` (converts points to cents at 1:1). The `pricing.ts` module gains `applyLoyaltyBurn`, which subtracts a point-based discount from the subtotal **after** the percent discount has been applied. The CI workflow is also updated to point at a development branch of Code Beat and to configure review models, retry logic, and report settings.\n\n## Big picture\nThis is the first piece of a loyalty program. Points are earned on the subtotal (whole dollars only) and can be burned as a fixed cent discount. The order of operations is deliberate: percent discounts are applied first, then loyalty burn, so that percentage deals never reduce the value of points. The architecture keeps loyalty logic separate from core pricing, with a clean import in `pricing.ts`.\n\n## Major decisions\n- **Integer points only** – points are integers (no floats) to avoid rounding drift; fractional cents do not earn points.\n- **1 point = 1 cent burn** – simple fixed rate; no tiered burn rates yet.\n- **Burn after percent discount** – ensures percent promotions don't diminish point value.\n- **Points from whole dollars only** – `Math.floor(subtotalCents / 100)`; fractional cents are ignored.\n- **CI workflow points at development branch** – uses `code-beat@improve-pr-overview-report` to test the new overview report feature.\n\n## Scope\n- **In scope**: loyalty points accrual, point-to-cents conversion, loyalty burn in pricing, CI workflow configuration for testing.\n- **Out of scope**: point redemption UI, tiered loyalty tiers, point expiration, integration with user accounts, or any persistence.",
+    "headline": "Add loyalty points for checkout: integer accrual from subtotal, burn after discount, and workflow update for Code Beat overview reporting.",
+    "body": "## What this PR does\n\nAdds a loyalty points system to the checkout flow. Customers earn points based on subtotal (1 point per whole dollar) and can burn points as a discount (1 point = 1 cent) applied after any percentage discount.\n\n## Big picture\n\n- **Accrual** (`src/loyalty.ts`): `pointsForSubtotal(subtotalCents)` returns `Math.floor(subtotalCents / 100)`. Points are integers, avoiding floating-point drift.\n- **Burn** (`src/loyalty.ts`): `centsFromPoints(points)` returns `Math.floor(points)` – a simple 1:1 cent-per-point conversion.\n- **Integration** (`src/pricing.ts`): New `applyLoyaltyBurn(subtotal, pointsToBurn)` subtracts burned cents from the subtotal (clamped to 0). It is called **after** `applyDiscount`, so percent discounts are applied first and do not reduce the value of points.\n- **Workflow** (`.github/workflows/code-beat.yml`): Updated to use the `improve-pr-overview-report` branch of Code Beat, enabling report generation with an overview. Also configures review/code-quality models, number of runs, and retry logic.\n\n## Major decisions\n\n- **Integer points**: Points are whole numbers, accrued from whole dollars only. Avoids rounding issues from floating-point arithmetic.\n- **Burn order**: Loyalty burn is applied after the percent discount. This ensures customers get full value from points regardless of promotional discounts.\n- **Simple 1:1 conversion**: 1 point = 1 cent. No tiered burn rates or value multipliers, keeping the system straightforward for the initial implementation.\n\n## Scope\n\n- **In scope**: New loyalty module, integration into existing pricing pipeline, and workflow configuration change to enable the Code Beat overview feature.\n- **Out of scope**: User-facing UI, point redemption limits, expiration, tiers, or any database/storage for balances. This is purely the calculation logic.",
     "majorDecisions": [
-      "Integer points only (no floats) to avoid rounding drift.",
-      "1 point = 1 cent burn rate for simplicity; no tiered rates yet.",
-      "Burn applied after percent discount so percentage deals don't reduce point value.",
-      "Points earned only from whole dollars (fractional cents ignored).",
-      "CI workflow points at a development branch to test the new overview report feature."
+      "Integer points (accrued from whole dollars) to avoid floating-point drift.",
+      "Burn applied after percent discount so deals don't reduce point value.",
+      "1 point = 1 cent conversion for simplicity; no tiered rates yet."
     ],
-    "areas": [
-      "checkout",
-      "loyalty",
-      "pricing",
-      "CI workflow"
-    ]
+    "areas": []
   },
   "review": {
     "score": 5,
