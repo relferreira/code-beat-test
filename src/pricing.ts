@@ -1,3 +1,5 @@
+import { centsFromPoints } from "./loyalty.js";
+
 export interface LineItem {
   sku: string;
   unitPrice: number;
@@ -18,4 +20,13 @@ export function applyDiscount(subtotal: number, discountPercent: number): number
   }
 
   return subtotal * (1 - discountPercent / 100);
+}
+
+/**
+ * Apply loyalty burn after percent discount.
+ * Decision: burn is applied last so percent deals never reduce the value of points.
+ */
+export function applyLoyaltyBurn(subtotal: number, pointsToBurn: number): number {
+  const burnCents = centsFromPoints(pointsToBurn);
+  return Math.max(0, subtotal - burnCents);
 }
