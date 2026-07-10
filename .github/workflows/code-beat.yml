@@ -14,8 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: relferreira/code-beat@main
+      - uses: relferreira/code-beat@improve-pr-overview-report
         with:
           openrouter-api-key: ${{ secrets.OPENROUTER_API_KEY }}
           report: true
+          report-branch: code-beat-reports
           viewer-url: https://code-beat.relferreira.workers.dev
+          review-models: |
+            deepseek/deepseek-v4-flash
+          code-quality-models: |
+            deepseek/deepseek-v4-flash
+          review-runs: 1
+          code-quality-runs: 1
+          retry-max-attempts: 3
+          retry-delay-ms: 1000
+          retry-backoff-factor: 2
