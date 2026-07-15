@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 3,
+  "generatedAt": "2026-07-15T10:42:06.893Z",
+  "tool": {
+    "name": "code-beat",
+    "version": "0.1.0"
+  },
+  "repo": {
+    "owner": "relferreira",
+    "name": "code-beat-test"
+  },
+  "pullRequest": {
+    "number": 10,
+    "title": "Document internal-agent draft PR smoke tests",
+    "author": "fashn-internal-agent-dev[bot]",
+    "baseRef": "main",
+    "headRef": "agent/github-app-smoke-a503d46b",
+    "baseSha": "1f115447222059fc64ecd9cab06faf8cd1304bcf",
+    "headSha": "a79f25e9fc23bd0769c1c867e221e20ca67fa08e"
+  },
+  "overview": {
+    "headline": "Documents that draft pull requests may be opened by the FASHN Internal Agent to validate repository-change automation.",
+    "body": "## Purpose\nThis PR adds a short note to the README informing contributors that draft pull requests may be opened by the FASHN Internal Agent to validate repository-change automation. The goal is to prevent confusion when such draft PRs appear.\n\n## Scope\nThe change is limited to a single file: `README.md`. It adds a new section titled \"Internal Agent Smoke Test\" with one sentence. No code, configuration, or workflow files are modified.\n\n## Impact\nThis is a documentation-only change. It has no effect on runtime behavior or the CI/CD pipeline.",
+    "majorDecisions": [],
+    "areas": [
+      "README",
+      "documentation"
+    ],
+    "diagrams": []
+  },
+  "changeStats": {
+    "filesChanged": 1,
+    "additions": 4,
+    "deletions": 0
+  },
+  "review": {
+    "score": 5,
+    "summary": "Code Beat did not find clear actionable issues in this pull request.",
+    "model": "deepseek/deepseek-v4-flash",
+    "truncatedDiff": false,
+    "skippedCommentCount": 0,
+    "findings": []
+  }
+}
