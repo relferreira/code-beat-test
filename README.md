@@ -18,3 +18,7 @@ OPENROUTER_API_KEY
 ```
 
 The workflow currently uses `anthropic/claude-sonnet-4` and can be edited in `.github/workflows/code-beat.yml`.
+
+## Internal Agent Smoke Test
+
+Draft pull requests may be opened by the FASHN Internal Agent to validate repository-change automation.
